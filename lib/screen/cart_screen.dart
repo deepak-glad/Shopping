@@ -33,7 +33,7 @@ class Order extends StatelessWidget {
                 },
                 child: Text(
                   'ORDER NOW',
-                  style: TextStyle(backgroundColor: Colors.lime, fontSize: 20),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
             ],
@@ -58,7 +58,7 @@ class Order extends StatelessWidget {
                     ),
                     Chip(
                       label: Text(
-                        '\$ ${cart.totalAmount.toStringAsFixed(2)}',
+                        '\₹ ${cart.totalAmount.toStringAsFixed(2)}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30),
                       ),

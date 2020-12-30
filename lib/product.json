@@ -3020,12 +3020,12 @@
           "SubCategoryId": "5c38b369-ffe5-439a-8e40-7e3d77f97ab4",
           "Category": {
             "id": "fc7de442-88ef-4e21-95ae-a360bb6b45a7",
-            "name": "Sanitiser",
+            "name": "Sanitizer",
             "priority": 12,
             "status": true,
             "description": null,
             "createdAt": 1608615088895,
-            "updatedAt": 1608651790169,
+            "updatedAt": 1608892221901,
             "MediumId": "f437dd2e-98ee-4f2c-8cc2-c09ba996d169",
             "Medium": {
               "id": "f437dd2e-98ee-4f2c-8cc2-c09ba996d169",

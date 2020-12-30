@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app/screen/ordered_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:shopping_app/provider/profile_provider.dart';
+
 import 'package:shopping_app/screen/category.dart';
-import '../screen/profile.dart';
+
 import 'package:shopping_app/widgets/photo.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -31,7 +30,11 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
             padding: EdgeInsets.only(top: 5),
-            child: Container(child: Photo()),
+            child: Container(
+              child: Photo(),
+              // color: Colors.amberAccent,
+              margin: EdgeInsets.all(8),
+            ),
           ),
           ListTile(
             title: Text(

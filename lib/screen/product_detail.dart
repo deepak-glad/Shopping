@@ -1,64 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/models/modell.dart';
 import 'package:shopping_app/provider/Product_provider.dart';
-import 'package:provider/provider.dart';
 
-class ProductDetail extends StatelessWidget {
+class ProductDetail extends StatefulWidget {
   static const routeName = '/product-detail';
+
+  @override
+  _ProductDetailState createState() => _ProductDetailState();
+}
+
+class _ProductDetailState extends State<ProductDetail> {
+  Future<Welcome> _newdata;
+
+  @override
+  void initState() {
+    _newdata = ProductProvider().getAnotherr();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final productId =
         ModalRoute.of(context).settings.arguments as String; // is the id!
-    final loadedProduct = Provider.of<ProductProvider>(context, listen: false)
-        .findById(productId);
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text(
-          loadedProduct.id,
-          style: TextStyle(color: Colors.black),
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          title: Text(
+            'Detail',
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Theme.of(context).canvasColor,
         ),
-        backgroundColor: Theme.of(context).canvasColor,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 500,
-              width: 500,
-              child: Image.network(
-                loadedProduct.imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  loadedProduct.title,
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Theme.of(context).accentColor,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  // loadedProduct.price.toString(),
-                  '\$${loadedProduct.price}',
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.red,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              loadedProduct.description,
-              style:
-                  TextStyle(fontSize: 25, color: Theme.of(context).accentColor),
-            ),
-            // Text(loadedProduct.id),
-          ],
-        ),
-      ),
-    );
+        body: FutureBuilder<Welcome>(
+          future: _newdata,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data.count,
+                itemBuilder: (ctx, index) {
+                  var dat = snapshot.data.data[index];
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 1,
+                      itemBuilder: (context, i) {
+                        if (dat.id == productId)
+                          return Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: Image.network(dat
+                                              .productCategories[0].category !=
+                                          null
+                                      ? dat.productCategories[0].category.medium
+                                          .url
+                                      : 'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_1280.jpg'),
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      dat.name,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      '₹${dat.productMrp.toString()}',
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Text(dat.description),
+                                Text(dat.shortProductDescription)
+                              ],
+                            ),
+                          );
+                      });
+                });
+          },
+        ));
   }
 }

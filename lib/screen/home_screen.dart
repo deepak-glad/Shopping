@@ -4,6 +4,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:shopping_app/provider/cart.dart';
 import 'package:shopping_app/screen/category.dart';
 import 'package:shopping_app/screen/cart_screen.dart';
+import 'package:shopping_app/screen/favorite_screen.dart';
 import 'package:shopping_app/screen/profile.dart';
 import '../widgets/home.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -12,6 +13,8 @@ import '../widgets/cart_badge.dart';
 import '../models/search.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/provider/Product_provider.dart';
+
+import 'ordered_screen.dart';
 
 class ShopApp2 extends StatefulWidget {
   @override
@@ -35,7 +38,7 @@ class _ShopApp2State extends State<ShopApp2> {
   final List<Widget> _children = [
     Home(),
     Category(),
-    Order(),
+    OrderScreen(),
     Profile(),
   ];
 
@@ -58,40 +61,41 @@ class _ShopApp2State extends State<ShopApp2> {
                   ),
                   Row(
                     children: [
-                      PopupMenuButton(
-                        onSelected: (FilterOption selectedValue) {
-                          if (selectedValue == FilterOption.Only) {
-                            containerFav.favoritesOnly();
-                          } else {
-                            containerFav.showAll();
-                          }
-                          // print(selectedValue);
-                        },
-                        icon: Icon(
-                          Icons.favorite,
-                          // color: Colors.red,
-                        ),
-                        itemBuilder: (_) => [
-                          PopupMenuItem(
-                            child: Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            ),
-                            value: FilterOption.Only,
-                          ),
-                          PopupMenuItem(
-                            value: FilterOption.All,
-                            child: Icon(Icons.favorite_border_sharp),
-                          ),
-                        ],
-                      ),
-                      // IconButton(
-                      //   icon: Icon(Icons.favorite),
-                      //   onPressed: () {
-                      //      Navigator.of(context).pushNamed(Favorite.routeName);
+                      // PopupMenuButton(
+                      //   onSelected: (FilterOption selectedValue) {
+                      //     if (selectedValue == FilterOption.Only) {
+                      //       containerFav.favoritesOnly();
+                      //     } else {
+                      //       containerFav.showAll();
+                      //     }
+                      //     // print(selectedValue);
                       //   },
-                      //   color: Theme.of(context).accentColor,
+                      //   icon: Icon(
+                      //     Icons.favorite,
+                      //     // color: Colors.red,
+                      //   ),
+                      //   itemBuilder: (_) => [
+                      //     PopupMenuItem(
+                      //       child: Icon(
+                      //         Icons.favorite,
+                      //         color: Colors.red,
+                      //       ),
+                      //       value: FilterOption.Only,
+                      //     ),
+                      //     PopupMenuItem(
+                      //       value: FilterOption.All,
+                      //       child: Icon(Icons.favorite_border_sharp),
+                      //     ),
+                      //   ],
                       // ),
+                      IconButton(
+                        icon: Icon(Icons.favorite),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(FavoriteScreen.routeName);
+                        },
+                        color: Theme.of(context).accentColor,
+                      ),
                       IconButton(
                         icon: Icon(Icons.search),
                         onPressed: () {
@@ -116,7 +120,10 @@ class _ShopApp2State extends State<ShopApp2> {
               backgroundColor: Theme.of(context).canvasColor,
             )
           : null,
-      body: _children[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _children,
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))

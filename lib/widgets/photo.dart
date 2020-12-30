@@ -110,30 +110,29 @@ class _PhotoState extends State<Photo> {
                     ),
                   );
                 }
-                // final doc = streamSnapshot.data.documents;
-                // DocumentSnapshot database = streamSnapshot.data.documents[index];
+
                 return ListView.builder(
-                    reverse: true,
+                    // reverse: true,
                     physics: NeverScrollableScrollPhysics(),
-                    // itemCount: streamSnapshot.data.documents.length,
+                    itemCount: streamSnapshot.data.documents.length,
                     itemBuilder: (context, index) {
                       DocumentSnapshot database =
                           streamSnapshot.data.documents[index];
-
+                      // print(user.uid);
+                      // print(database.id);
                       // print(streamSnapshot.data.documents[index]["username"]);
                       if (futureSnapshot.data.uid == database.id) {
                         print(database["username"]);
                         return Row(children: [
                           CircleAvatar(
                             // backgroundColor: Colors.white,
-                            backgroundImage: database["image_url"] != null
-                                ? NetworkImage(database["image_url"])
-                                : AssetImage('assets/profile/dummyprofile.jpg'),
+                            backgroundImage:
+                                NetworkImage(database["image_url"], scale: 1),
                             radius: 70,
                           ),
                           Expanded(
                             child: Text(
-                              database["username"] ?? 'USERNAME',
+                              database["username"],
                               textAlign: TextAlign.right,
                               overflow: TextOverflow.clip,
                               style: TextStyle(
@@ -177,6 +176,7 @@ class _PhotoState extends State<Photo> {
                       //       },
                       //     ),
                       //   ]);
+                      return Container();
                     });
               });
         });

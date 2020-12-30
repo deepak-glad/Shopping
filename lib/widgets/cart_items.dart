@@ -40,11 +40,11 @@ class OrderItems extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.all(8),
             child: ListTile(
-              leading: Text('\$${price.toStringAsFixed(2)}'),
+              leading: Text('\₹${price.toStringAsFixed(2)}'),
               title: Text(title),
               subtitle:
-                  Text('Total \$${(price * quantity).toStringAsFixed(2)}'),
-              trailing: Text('\$$quantity x'),
+                  Text('Total \₹${(price * quantity).toStringAsFixed(2)}'),
+              trailing: Text('\₹$quantity x'),
             )),
       ),
     );

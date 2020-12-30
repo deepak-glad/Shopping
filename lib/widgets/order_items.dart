@@ -22,7 +22,7 @@ class _OrdersItemState extends State<OrdersItem> {
       child: Column(
         children: [
           ListTile(
-            title: Text('\$${widget.order.amount.toStringAsFixed(2)}'),
+            title: Text('\₹${widget.order.amount.toStringAsFixed(2)}'),
             subtitle: Text(
                 DateFormat('dd/MM/yyyy hh:mm').format(widget.order.dateTime)),
             trailing: IconButton(
@@ -37,25 +37,27 @@ class _OrdersItemState extends State<OrdersItem> {
           if (_expanded)
             Container(
               margin: EdgeInsets.all(15),
-              height: min(widget.order.products.length * 10.0 + 50, 180),
+              height: max(widget.order.products.length * 20.0 + 180, 80),
               child: ListView(
                   children: widget.order.products
-                      .map((prod) => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      .map((prod) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(prod.title,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   )),
                               Text(
-                                '${prod.quantity} * \$${prod.price}',
+                                '${prod.quantity} * \₹${prod.price}',
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.grey,
                                 ),
                               ),
-                              Text('\$${prod.quantity * prod.price}'),
+                              Text('\₹${prod.quantity * prod.price}'),
                             ],
                           ))
                       .toList()),
