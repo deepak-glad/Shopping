@@ -59,4 +59,14 @@ class FavoritePage with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void removeItem(String productId) {
+    _map.remove(productId);
+    notifyListeners();
+  }
+
+  void clear() {
+    _map = {};
+    notifyListeners();
+  }
 }
